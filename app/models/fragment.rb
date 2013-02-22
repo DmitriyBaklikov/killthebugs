@@ -12,6 +12,21 @@ class Fragment < ActiveRecord::Base
 
   def create_hashie
     self.hashie = SecureRandom.hex(16)
+    number = 1
+    code_with_lines = ""
+    self.code.lines.each do |line|
+      if number < 10
+        prefix = "00"
+      elsif number > 9 and number < 100
+        prefix = "0"
+      else
+        prefix = ""
+      end
+
+      code_with_lines += prefix + number.to_s + line
+      number += 1
+    end
+    self.code = code_with_lines
     self.save
   end
 
