@@ -3,7 +3,9 @@ Killthebugs::Application.routes.draw do
   get 'fragments/shared' => 'fragments#shared', :as => "shared_fragments"
 
   get 'share_fragment/:fragment_id/to/:user_id' => 'fragments#share', :as => "share_fragment"
-
+  
+  get 'unshare_fragment/:fragment_id/to/:user_id' => 'fragments#unshare', :as => "unshare_fragment"
+  
   resources :fragments
 
 

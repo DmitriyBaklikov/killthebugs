@@ -18,8 +18,7 @@
             Yes,
             = link_to "Public link", fragment_by_hashie_path(fragment.hashie)
           - else
-            No,
-            = link_to "see collaborators"
+            No, private
         %td= fragment.has_bugs
         %td
           - if fragment.users.empty?

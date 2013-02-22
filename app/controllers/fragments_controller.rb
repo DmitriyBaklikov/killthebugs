@@ -1,6 +1,6 @@
 class FragmentsController < ApplicationController
   
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:hashie]
 
   def hashie
 
@@ -17,6 +17,19 @@ class FragmentsController < ApplicationController
     else
       redirect_to :fragments, :notice => "Cant' share fragment! May be it's already shared"
     end
+
+  end
+
+  def unshare
+    
+    @sharings = Sharing.where(:user_id => params[:user_id], :fragment_id => params[:fragment_id])
+    
+    if @sharings.destroy_all
+      redirect_to :fragments, :notice => "This sharing removed!"
+    else
+      redirect_to :fragments, :notice => "Cant' remove sharing! May be it's already deleted"
+    end
+
   end
 
   def shared
@@ -84,11 +97,9 @@ class FragmentsController < ApplicationController
 
     respond_to do |format|
       if @fragment.save
-        format.html { redirect_to @fragment, notice: 'Fragment was successfully created.' }
-        format.json { render json: @fragment, status: :created, location: @fragment }
+        format.html { redirect_to fragment_path(@fragment), notice: 'Fragment was successfully created.' }
       else
         format.html { render action: "new" }
-        format.json { render json: @fragment.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -100,11 +111,9 @@ class FragmentsController < ApplicationController
 
     respond_to do |format|
       if @fragment.update_attributes(params[:fragment])
-        format.html { redirect_to @fragment, notice: 'Fragment was successfully updated.' }
-        format.json { head :no_content }
+        format.html { redirect_to fragment_path(@fragment), notice: 'Fragment was successfully updated.' }
       else
         format.html { render action: "edit" }
-        format.json { render json: @fragment.errors, status: :unprocessable_entity }
       end
     end
   end

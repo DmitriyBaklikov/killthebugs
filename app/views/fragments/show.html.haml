@@ -1,5 +1,10 @@
 - model_class = Fragment
 %h3= @fragment.title
+- if @fragment.is_public
+  %p
+    Use this link to share with all signed in members of KillTheBugs:
+    %br/
+    <input type=text style="width: 100%" value="#{fragment_by_hashie_url(@fragment.hashie)}"/>
 %p
   This is
   = @fragment.is_public ? "public" : "private"
@@ -14,7 +19,7 @@
 - else
   Shared with users (click to remove):
   - @fragment.users.each do |user|
-    .btn.btn-mini= user.email
+    .btn.btn-mini= link_to user.email, unshare_fragment_path(@fragment.id, user.id)
 
 %p Click at user to invite him:
 - (User.all - @fragment.users).each do |user|
