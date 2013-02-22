@@ -34,10 +34,10 @@
             %ul.nav.pull-right
               
               - if user_signed_in?
-                %li= link_to "UPLOAD SOME CODE!"
-                %li= link_to "My Code Fragments", fragments_path
-                %li= link_to "Shared with Me (#{current_user.fragments.count})"
-                %li= link_to "Sign out", destroy_user_session_path, :method => :delete
+                %li= link_to "UPLOAD SOME CODE!", new_fragment_path
+                %li= link_to "My Code Fragments (#{Fragment.where(:user_id => current_user.id).count})", fragments_path
+                %li= link_to "Shared with Me (#{current_user.fragments.count})", shared_fragments_path
+                %li= link_to "Sign out (#{current_user.email})", destroy_user_session_path, :method => :delete
               - else
                 %li= link_to "Where am I?", welcome_about_path
                 %li= link_to "Sign in!", new_user_session_path

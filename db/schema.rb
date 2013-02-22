@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130222090753) do
+ActiveRecord::Schema.define(:version => 20130222101712) do
 
   create_table "fragments", :force => true do |t|
     t.string   "title"
@@ -25,9 +25,9 @@ ActiveRecord::Schema.define(:version => 20130222090753) do
     t.string   "language"
   end
 
-  create_table "fragments_users", :id => false, :force => true do |t|
-    t.integer "fragment_id"
+  create_table "sharings", :force => true do |t|
     t.integer "user_id"
+    t.integer "fragment_id"
   end
 
   create_table "users", :force => true do |t|

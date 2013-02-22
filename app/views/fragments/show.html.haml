@@ -9,9 +9,16 @@
 
 = raw Pygments.highlight(@fragment.code, :lexer => @fragment.language)
 
+- if @fragment.users.empty?
+  Not shared yet
+- else
+  Shared with users (click to remove):
+  - @fragment.users.each do |user|
+    .btn.btn-mini= user.email
+
 %p Click at user to invite him:
-- User.all.each do |user|
-  .btn.btn-default= link_to user.email
+- (User.all - @fragment.users).each do |user|
+  .btn.btn-default= link_to user.email, share_fragment_path(@fragment.id, user.id)
 
 .form-actions
   = link_to t('.back', :default => t("helpers.links.back")), fragments_path, :class => 'btn'
