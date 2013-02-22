@@ -45,7 +45,7 @@ class FragmentsController < ApplicationController
     
     @fragment = Fragment.find(params[:id])
 
-    if User.find(@fragment.user_id) == current_user.id
+    if User.find(@fragment.user_id).id == current_user.id
       render :show and return
     elsif @fragment.users.include?(current_user)
       render :show_shared and return
