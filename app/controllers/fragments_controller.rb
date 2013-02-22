@@ -98,6 +98,24 @@ class FragmentsController < ApplicationController
     
     @fragment         = Fragment.new(params[:fragment])
     @fragment.user_id = current_user.id
+    
+    code = @fragment.code
+
+    code_with_lines = ""
+    number = 1
+    code.lines.each do |line|
+      prefix = ""
+      if number < 100 and number > 9
+        prefix = "0"
+      end
+      if number < 10
+        prefix = "00"
+      end
+      code_with_lines += prefix + number.to_s + line
+      number += 1
+    end
+
+    @fragment.code = code_with_lines
 
     respond_to do |format|
       if @fragment.save
