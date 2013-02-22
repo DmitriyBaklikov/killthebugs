@@ -85,7 +85,11 @@ class FragmentsController < ApplicationController
 
   # GET /fragments/1/edit
   def edit
-    @fragment = Fragment.find(params[:id])
+    if can_edit_fragment(params[:id])
+      @fragment = Fragment.find(params[:id])
+    else
+      redirect_to root_path, :alert => "Sorry, you cant' edit this code fragment!"
+    end
   end
 
   # POST /fragments
@@ -107,14 +111,22 @@ class FragmentsController < ApplicationController
   # PUT /fragments/1
   # PUT /fragments/1.json
   def update
-    @fragment = Fragment.find(params[:id])
 
-    respond_to do |format|
-      if @fragment.update_attributes(params[:fragment])
-        format.html { redirect_to fragment_path(@fragment), notice: 'Fragment was successfully updated.' }
-      else
-        format.html { render action: "edit" }
+    if can_edit_fragment(params[:id])
+
+      @fragment = Fragment.find(params[:id])
+
+      respond_to do |format|
+        if @fragment.update_attributes(params[:fragment])
+          format.html { redirect_to fragment_path(@fragment), notice: 'Fragment was successfully updated.' }
+        else
+          format.html { render action: "edit" }
+        end
       end
+    else
+
+      redirect_to root_path, :alert => "Sorry, you cant' update this code fragment!"
+
     end
   end
 
