@@ -42,7 +42,16 @@ class FragmentsController < ApplicationController
   # GET /fragments/1
   # GET /fragments/1.json
   def show
+    
     @fragment = Fragment.find(params[:id])
+
+    if User.find(@fragment.user_id) == current_user.id
+      render :show and return
+    elsif @fragment.users.include?(current_user)
+      render :show_shared and return
+    else
+      redirect_to root_path, :alert => "Sorry, you have no access to this page" and return
+    end
 
     respond_to do |format|
       format.html # show.html.erb

@@ -18,7 +18,8 @@
 
 %p Click at user to invite him:
 - (User.all - @fragment.users).each do |user|
-  .btn.btn-default= link_to user.email, share_fragment_path(@fragment.id, user.id)
+  - if user.id != current_user.id
+    .btn.btn-default= link_to user.email, share_fragment_path(@fragment.id, user.id)
 
 .form-actions
   = link_to t('.back', :default => t("helpers.links.back")), fragments_path, :class => 'btn'

@@ -39,7 +39,6 @@
                 %li= link_to "Shared with Me (#{current_user.fragments.count})", shared_fragments_path
                 %li= link_to "Sign out (#{current_user.email})", destroy_user_session_path, :method => :delete
               - else
-                %li= link_to "Where am I?", welcome_about_path
                 %li= link_to "Sign in!", new_user_session_path
                 %li= link_to "Create account", new_user_registration_path
               

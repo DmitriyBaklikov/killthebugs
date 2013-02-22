@@ -5,25 +5,15 @@
   %thead
     %tr
       %th= model_class.human_attribute_name(:title)
-      %th= model_class.human_attribute_name(:is_public)
+      %th Author
       %th= model_class.human_attribute_name(:has_bugs)
       %th= model_class.human_attribute_name(:created_at)
-      %th=t '.actions', :default => t("helpers.actions")
   %tbody
     - @fragments.each do |fragment|
       %tr
         %td= link_to fragment.title, fragment_path(fragment)
-        %td
-          - if fragment.is_public
-            Yes,
-            = link_to "Public link", fragment_by_hashie_path(fragment.hashie)
-          - else
-            No,
-            = link_to "see collaborators"
+        %td= User.find(fragment.user_id).email
         %td= fragment.has_bugs
         %td=l fragment.created_at
-        %td
-          = link_to t('.edit', :default => t("helpers.links.edit")), edit_fragment_path(fragment), :class => 'btn btn-mini'
-          = link_to t('.destroy', :default => t("helpers.links.destroy")), fragment_path(fragment), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'
 
 = link_to t('.new', :default => t("helpers.links.new")), new_fragment_path, :class => 'btn btn-primary'

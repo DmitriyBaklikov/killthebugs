@@ -10,9 +10,7 @@ Killthebugs::Application.routes.draw do
   devise_for :users
 
   get "welcome/index"
-  
-  get "welcome/about"
-  
+    
   get "/:hashie" => "fragments#hashie", :as => "fragment_by_hashie"
 
   # The priority is based upon order of creation:
