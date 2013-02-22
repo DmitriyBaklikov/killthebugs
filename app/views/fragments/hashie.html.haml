@@ -1,0 +1,15 @@
+- unless @fragment.nil?
+  - if @fragment.is_public
+    %h3= @fragment.title
+    %p
+      This is
+      = @fragment.is_public ? "public" : "private"
+      code fragment
+      = @fragment.has_bugs ? "with" : "without"
+      bug(s)
+
+    = raw Pygments.highlight(@fragment.code, :lexer => @fragment.language)
+  - else
+    Sorry, but this is not public resource!
+- else
+  Sorry, but there is no code fragments!

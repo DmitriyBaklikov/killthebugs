@@ -1,0 +1,30 @@
+= form_for @fragment, :html => { :class => 'form-horizontal' } do |f|
+  - if @fragment.errors.any?
+    #error_explanation
+      %p= "#{pluralize(@fragment.errors.count, "error")} prohibited this fragment from being saved:"
+      %ul
+        - @fragment.errors.full_messages.each do |msg|
+          %li= msg
+  .control-group
+    = f.label :title, "Title this code", :class => 'control-label'
+    .controls
+      = f.text_field :title, :class => 'text_field'
+  .control-group
+    = f.label :language, "What language is it?", :class => 'control-label'
+    .controls
+      = f.select :language, options_for_select(c_l, @fragment.language)
+  .control-group
+    = f.label :is_public, "This should be public?", :class => 'control-label'
+    .controls
+      = f.check_box :is_public, :class => 'check_box'
+  .control-group
+    = f.label :has_bugs, "Is it buggy?", :class => 'control-label'
+    .controls
+      = f.check_box :has_bugs, :class => 'check_box'
+  .control-group
+    = f.label :code, "Place your code here:", :class => 'control-label'
+    .controls
+      = f.text_area :code, :class => 'text_area'
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), fragments_path, :class => 'btn'
