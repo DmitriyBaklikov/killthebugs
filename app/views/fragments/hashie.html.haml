@@ -8,7 +8,7 @@
       = @fragment.has_bugs ? "with" : "without"
       bug(s)
 
-    = raw Pygments.highlight(@fragment.code, :lexer => @fragment.language)
+    = highlighted_code(@fragment)
   - else
     Sorry, but this is not public resource!
 - else
