@@ -1,17 +1,17 @@
 class FragmentsController < ApplicationController
-  
+
   before_filter :authenticate_user!, :except => [:hashie]
 
   def hashie
 
     @fragment = Fragment.find_by_hashie(params[:hashie])
-    
+
   end
 
   def share
 
     @sharing = Sharing.new(:user_id => params[:user_id], :fragment_id => params[:fragment_id])
-    
+
     if @sharing.save
       redirect_to :fragments, :notice => "Code fragment shared!"
     else
@@ -21,9 +21,9 @@ class FragmentsController < ApplicationController
   end
 
   def unshare
-    
+
     @sharings = Sharing.where(:user_id => params[:user_id], :fragment_id => params[:fragment_id])
-    
+
     if @sharings.destroy_all
       redirect_to :fragments, :notice => "This sharing removed!"
     else
@@ -55,7 +55,7 @@ class FragmentsController < ApplicationController
   # GET /fragments/1
   # GET /fragments/1.json
   def show
-    
+
     @fragment = Fragment.find(params[:id])
 
     if User.find(@fragment.user_id).id == current_user.id
@@ -95,10 +95,9 @@ class FragmentsController < ApplicationController
   # POST /fragments
   # POST /fragments.json
   def create
-    
-    @fragment         = Fragment.new(params[:fragment])
+    @fragment = Fragment.new(params[:fragment])
     @fragment.user_id = current_user.id
-    
+
     respond_to do |format|
       if @fragment.save
         format.html { redirect_to fragment_path(@fragment), notice: 'Fragment was successfully created.' }

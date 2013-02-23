@@ -1,4 +1,3 @@
-- model_class = Fragment
 %h3= @fragment.title
 - if @fragment.is_public
   %p
@@ -12,7 +11,7 @@
   = @fragment.has_bugs ? "with" : "without"
   bug(s)
 
-= raw Pygments.highlight(@fragment.code, :lexer => @fragment.language)
+= highlighted_code(@fragment)
 
 - if @fragment.users.empty?
   Not shared yet
