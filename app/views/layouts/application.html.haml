@@ -32,7 +32,7 @@
             = link_to "Kill The Bugs", root_path, :class => "brand"
           .container.nav-collapse
             %ul.nav.pull-right
-              
+
               - if user_signed_in?
                 %li= link_to "UPLOAD SOME CODE!", new_fragment_path
                 %li= link_to "My Code Fragments (#{Fragment.where(:user_id => current_user.id).count})", fragments_path
@@ -41,7 +41,7 @@
               - else
                 %li= link_to "Sign in!", new_user_session_path
                 %li= link_to "Create account", new_user_registration_path
-              
+
 
     .container
       = bootstrap_flash

@@ -78,14 +78,10 @@ GEM
     orm_adapter (0.4.0)
     pg (0.14.1)
     polyglot (0.3.3)
-    posix-spawn (0.3.6)
     pry (0.9.12)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
-    pygments.rb (0.3.7)
-      posix-spawn (~> 0.3.6)
-      yajl-ruby (~> 1.1.0)
     quiet_assets (1.0.1)
       railties (~> 3.1)
     rack (1.4.5)
@@ -114,6 +110,8 @@ GEM
     rdoc (3.12.1)
       json (~> 1.4)
     ref (1.0.2)
+    rouge (0.2.13)
+      thor
     sass (3.2.5)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -143,7 +141,6 @@ GEM
       multi_json (~> 1.0, >= 1.0.2)
     warden (1.2.1)
       rack (>= 1.0)
-    yajl-ruby (1.1.0)
 
 PLATFORMS
   ruby
@@ -156,9 +153,9 @@ DEPENDENCIES
   less-rails
   pg
   pry
-  pygments.rb
   quiet_assets
   rails (= 3.2.12)
+  rouge
   sass-rails (~> 3.2.3)
   therubyracer
   twitter-bootstrap-rails

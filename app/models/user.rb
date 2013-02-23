@@ -9,5 +9,4 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   has_many :sharings
   has_many :fragments, :through => :sharings
-  
 end

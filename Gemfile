@@ -9,7 +9,7 @@ gem 'haml-rails'
 gem "less-rails"
 gem "twitter-bootstrap-rails"
 gem 'devise'
-gem 'pygments.rb'
+gem 'rouge'
 
 group :development do
   gem 'quiet_assets'
@@ -22,4 +22,3 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
 end
-
