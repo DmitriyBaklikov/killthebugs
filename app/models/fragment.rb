@@ -1,11 +1,13 @@
 class Fragment < ActiveRecord::Base
 
+  validates_presence_of :code, :user_id, :language
   validates_uniqueness_of :title, :scope => :user_id
   validates_uniqueness_of :hashie
 
   attr_accessible :code, :has_bugs, :is_public, :title, :language
   has_many :sharings
   has_many :users, :through => :sharings
+  belongs_to :author, class_name: "User", foreign_key: :user_id, inverse_of: :own_fragments
 
   before_create :auto_title
   after_create :create_hashie

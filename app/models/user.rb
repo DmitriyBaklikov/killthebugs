@@ -9,4 +9,6 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   has_many :sharings
   has_many :fragments, :through => :sharings
+
+  has_many :own_fragments, class_name: "Fragment", foreign_key: :user_id
 end

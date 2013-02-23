@@ -95,8 +95,7 @@ class FragmentsController < ApplicationController
   # POST /fragments
   # POST /fragments.json
   def create
-    @fragment = Fragment.new(params[:fragment])
-    @fragment.user_id = current_user.id
+    @fragment = current_user.own_fragments.new params[:fragment]
 
     respond_to do |format|
       if @fragment.save
