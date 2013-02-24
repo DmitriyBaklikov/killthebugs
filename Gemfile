@@ -10,6 +10,10 @@ gem 'devise'
 gem 'rouge'                     # syntax highlighting
 gem 'activerecord-postgres-hstore'
 
+gem 'unicorn'
+gem 'capistrano'
+gem 'rvm-capistrano'
+
 group :development do
   gem 'quiet_assets'
   gem 'pry-rails'
