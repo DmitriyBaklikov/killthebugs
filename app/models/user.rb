@@ -13,7 +13,14 @@ class User < ActiveRecord::Base
 
   serialize :settings, ActiveRecord::Coders::Hstore
 
+  validates :api_token, uniqueness: true
+
   after_create :initialize_settings
+
+  def generate_api_token!
+    self.api_token = SecureRandom.hex(16) + id.to_s
+    self.save!
+  end
 
   private
 

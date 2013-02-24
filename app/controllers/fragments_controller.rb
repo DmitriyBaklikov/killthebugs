@@ -3,13 +3,10 @@ class FragmentsController < ApplicationController
   before_filter :authenticate_user!, :except => [:hashie]
 
   def hashie
-
     @fragment = Fragment.find_by_hashie(params[:hashie])
-
   end
 
   def share
-
     @sharing = Sharing.new(:user_id => params[:user_id], :fragment_id => params[:fragment_id])
 
     if @sharing.save
@@ -17,11 +14,9 @@ class FragmentsController < ApplicationController
     else
       redirect_to :fragments, :notice => "Cant' share fragment! May be it's already shared"
     end
-
   end
 
   def unshare
-
     @sharings = Sharing.where(:user_id => params[:user_id], :fragment_id => params[:fragment_id])
 
     if @sharings.destroy_all
@@ -29,7 +24,6 @@ class FragmentsController < ApplicationController
     else
       redirect_to :fragments, :notice => "Cant' remove sharing! May be it's already deleted"
     end
-
   end
 
   def shared
@@ -55,7 +49,6 @@ class FragmentsController < ApplicationController
   # GET /fragments/1
   # GET /fragments/1.json
   def show
-
     @fragment = Fragment.find(params[:id])
 
     if User.find(@fragment.user_id).id == current_user.id
