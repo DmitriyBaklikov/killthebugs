@@ -3,6 +3,10 @@ FactoryGirl.define do
     "test#{n}@test.com"
   end
 
+  sequence :title do |n|
+    "code snippet #{n}"
+  end
+
   factory :user do
     email
     password "123123"
@@ -13,5 +17,6 @@ FactoryGirl.define do
     association :author, factory: :user
     code "puts 'Hello world'"
     language "ruby"
+    title
   end
 end

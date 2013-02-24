@@ -1,18 +1,19 @@
 Killthebugs::Application.routes.draw do
-  
+
   get 'fragments/shared' => 'fragments#shared', :as => "shared_fragments"
 
   get 'share_fragment/:fragment_id/to/:user_id' => 'fragments#share', :as => "share_fragment"
-  
+
   get 'unshare_fragment/:fragment_id/to/:user_id' => 'fragments#unshare', :as => "unshare_fragment"
-  
+
   resources :fragments
 
+  resource :settings, only: [:edit, :update]
 
   devise_for :users
 
   get "welcome/index"
-    
+
   get "/:hashie" => "fragments#hashie", :as => "fragment_by_hashie"
 
   # The priority is based upon order of creation:

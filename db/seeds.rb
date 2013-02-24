@@ -15,6 +15,7 @@ puts "Password: 123123"
 puts
 
 puts "Creating fragments"
-5.times do
-  FactoryGirl.create :fragment, code: File.read(__FILE__), author: User.all.sample
+20.times do
+  fragment = FactoryGirl.build :fragment, code: File.read(__FILE__), author: User.all.sample
+  fragment.save!
 end

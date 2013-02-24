@@ -22,6 +22,6 @@ class Fragment < ActiveRecord::Base
 
   def create_hashie
     self.hashie = SecureRandom.hex(16)
-    self.save
+    self.save!
   end
 end

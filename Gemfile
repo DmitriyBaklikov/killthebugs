@@ -8,6 +8,7 @@ gem "less-rails"
 gem "twitter-bootstrap-rails"
 gem 'devise'
 gem 'rouge'                     # syntax highlighting
+gem 'activerecord-postgres-hstore'
 
 group :development do
   gem 'quiet_assets'
