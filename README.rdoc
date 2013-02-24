@@ -1,5 +1,6 @@
 == Welcome to KillTheBugs!
 
+
 Hello.
 
 This is small pastebin-like software that allows you to create and keep code fragments to help you memory, share some code snippets with other developers, ask for help and search for bugs.
