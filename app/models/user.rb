@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
 
   serialize :settings, ActiveRecord::Coders::Hstore
 
-  validates :api_token, uniqueness: true
+  validates :api_token, uniqueness: {allow_nil: true}
 
   after_create :initialize_settings
 
