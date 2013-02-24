@@ -12,6 +12,11 @@ class Fragment < ActiveRecord::Base
   before_create :auto_title
   after_create :create_hashie
 
+  # strip useless symbols that browsers may send
+  def code=(val)
+    write_attribute(:code, val.delete("\r"))
+  end
+
   private
 
   def auto_title
