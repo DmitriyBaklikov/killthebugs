@@ -1,6 +1,10 @@
 /* more themes at http://igniteflow.com/pygments/themes/. replace .codehilite class with .highlight */
 
 /* railscasts theme */
+.highlight * {
+  font-family: 'Ubuntu Mono', sans-serif;
+  font-size: 14px;
+}
 .highlight  { background: #2B2B2B; color: #E6E1DC}
 .highlight .hll { background-color: #ffffcc }
 .highlight .c { color: #BC9458; font-style: italic} /* Comment */
