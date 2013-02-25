@@ -1,6 +1,7 @@
 class Fragment < ActiveRecord::Base
 
   validates_presence_of :code, :user_id, :language
+  validates_presence_of :title
   validates_uniqueness_of :title, :scope => :user_id
   validates_uniqueness_of :hashie
 

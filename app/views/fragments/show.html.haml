@@ -10,9 +10,6 @@
   code fragment
   = @fragment.has_bugs ? "with" : "without"
   bug(s)
-
-= highlighted_code(@fragment)
-
 - if @fragment.users.empty?
   Not shared yet
 - else
@@ -22,9 +19,9 @@
 
 %p Click at user to invite him:
 - (User.all - @fragment.users - [current_user]).each do |user|
-  .btn.btn-default= link_to user.email, share_fragment_path(@fragment.id, user.id)
-
-.form-actions
-  = link_to t('.back', :default => t("helpers.links.back")), fragments_path, :class => 'btn'
-  = link_to t('.edit', :default => t("helpers.links.edit")), edit_fragment_path(@fragment), :class => 'btn'
-  = link_to t('.destroy', :default => t("helpers.links.destroy")), fragment_path(@fragment), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
+  .btn.btn-default.btn-mini= link_to user.email, share_fragment_path(@fragment.id, user.id)
+= link_to t('.edit', :default => t("helpers.links.edit")), edit_fragment_path(@fragment), :class => 'btn btn-mini'
+= link_to t('.destroy', :default => t("helpers.links.destroy")), fragment_path(@fragment), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'
+%br/
+%br/
+= highlighted_code(@fragment)
