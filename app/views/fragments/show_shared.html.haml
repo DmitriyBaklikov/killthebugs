@@ -1,0 +1,17 @@
+- model_class = Fragment
+%h3= @fragment.title
+%p
+  This is
+  = @fragment.is_public ? "public" : "private"
+  code fragment
+  = @fragment.has_bugs ? "with" : "without"
+  bug(s)
+
+= highlighted_code(@fragment)
+
+- if @fragment.users.empty?
+  Not shared yet
+- else
+  Shared with users:
+  - @fragment.users.each do |user|
+    .btn.btn-mini= user.email

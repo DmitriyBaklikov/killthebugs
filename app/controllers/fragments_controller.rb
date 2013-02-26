@@ -1,21 +1,28 @@
 class FragmentsController < ApplicationController
-  
-  before_filter :authenticate_user!
+
+  before_filter :authenticate_user!, :except => [:hashie]
 
   def hashie
-
     @fragment = Fragment.find_by_hashie(params[:hashie])
-    
   end
 
   def share
-
     @sharing = Sharing.new(:user_id => params[:user_id], :fragment_id => params[:fragment_id])
-    
+
     if @sharing.save
       redirect_to :fragments, :notice => "Code fragment shared!"
     else
       redirect_to :fragments, :notice => "Cant' share fragment! May be it's already shared"
+    end
+  end
+
+  def unshare
+    @sharings = Sharing.where(:user_id => params[:user_id], :fragment_id => params[:fragment_id])
+
+    if @sharings.destroy_all
+      redirect_to :fragments, :notice => "This sharing removed!"
+    else
+      redirect_to :fragments, :notice => "Cant' remove sharing! May be it's already deleted"
     end
   end
 
@@ -44,6 +51,14 @@ class FragmentsController < ApplicationController
   def show
     @fragment = Fragment.find(params[:id])
 
+    if User.find(@fragment.user_id).id == current_user.id
+      render :show and return
+    elsif @fragment.users.include?(current_user)
+      render :show_shared and return
+    else
+      redirect_to root_path, :alert => "Sorry, you have no access to this page" and return
+    end
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @fragment }
@@ -63,23 +78,23 @@ class FragmentsController < ApplicationController
 
   # GET /fragments/1/edit
   def edit
-    @fragment = Fragment.find(params[:id])
+    if can_edit_fragment(params[:id])
+      @fragment = Fragment.find(params[:id])
+    else
+      redirect_to root_path, :alert => "Sorry, you cant' edit this code fragment!"
+    end
   end
 
   # POST /fragments
   # POST /fragments.json
   def create
-    
-    @fragment         = Fragment.new(params[:fragment])
-    @fragment.user_id = current_user.id
+    @fragment = current_user.own_fragments.new params[:fragment]
 
     respond_to do |format|
       if @fragment.save
-        format.html { redirect_to @fragment, notice: 'Fragment was successfully created.' }
-        format.json { render json: @fragment, status: :created, location: @fragment }
+        format.html { redirect_to fragment_path(@fragment), notice: 'Fragment was successfully created.' }
       else
         format.html { render action: "new" }
-        format.json { render json: @fragment.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -87,16 +102,22 @@ class FragmentsController < ApplicationController
   # PUT /fragments/1
   # PUT /fragments/1.json
   def update
-    @fragment = Fragment.find(params[:id])
 
-    respond_to do |format|
-      if @fragment.update_attributes(params[:fragment])
-        format.html { redirect_to @fragment, notice: 'Fragment was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @fragment.errors, status: :unprocessable_entity }
+    if can_edit_fragment(params[:id])
+
+      @fragment = Fragment.find(params[:id])
+
+      respond_to do |format|
+        if @fragment.update_attributes(params[:fragment])
+          format.html { redirect_to fragment_path(@fragment), notice: 'Fragment was successfully updated.' }
+        else
+          format.html { render action: "edit" }
+        end
       end
+    else
+
+      redirect_to root_path, :alert => "Sorry, you cant' update this code fragment!"
+
     end
   end
 
@@ -105,6 +126,8 @@ class FragmentsController < ApplicationController
   def destroy
     @fragment = Fragment.find(params[:id])
     @fragment.destroy
+
+    @sharings = Sharing.where(:fragment_id => params[:id]).destroy_all
 
     respond_to do |format|
       format.html { redirect_to fragments_url }

@@ -1,26 +1,27 @@
-- model_class = Fragment
 %h3= @fragment.title
+- if @fragment.is_public
+  %p
+    Use this link to share with all signed in members of KillTheBugs:
+    %br/
+    <input type=text style="width: 100%" value="#{fragment_by_hashie_url(@fragment.hashie)}"/>
 %p
   This is
   = @fragment.is_public ? "public" : "private"
   code fragment
   = @fragment.has_bugs ? "with" : "without"
   bug(s)
-
-= raw Pygments.highlight(@fragment.code, :lexer => @fragment.language)
-
 - if @fragment.users.empty?
   Not shared yet
 - else
   Shared with users (click to remove):
   - @fragment.users.each do |user|
-    .btn.btn-mini= user.email
+    .btn.btn-mini= link_to user.email, unshare_fragment_path(@fragment.id, user.id)
 
 %p Click at user to invite him:
-- (User.all - @fragment.users).each do |user|
-  .btn.btn-default= link_to user.email, share_fragment_path(@fragment.id, user.id)
-
-.form-actions
-  = link_to t('.back', :default => t("helpers.links.back")), fragments_path, :class => 'btn'
-  = link_to t('.edit', :default => t("helpers.links.edit")), edit_fragment_path(@fragment), :class => 'btn'
-  = link_to t('.destroy', :default => t("helpers.links.destroy")), fragment_path(@fragment), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
+- (User.all - @fragment.users - [current_user]).each do |user|
+  .btn.btn-default.btn-mini= link_to user.email, share_fragment_path(@fragment.id, user.id)
+= link_to t('.edit', :default => t("helpers.links.edit")), edit_fragment_path(@fragment), :class => 'btn btn-mini'
+= link_to t('.destroy', :default => t("helpers.links.destroy")), fragment_path(@fragment), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'
+%br/
+%br/
+= highlighted_code(@fragment)

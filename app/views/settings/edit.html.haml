@@ -1,0 +1,5 @@
+= form_tag settings_path, method: :put do
+  = label_tag "Default language"
+  = select_tag "settings[default_language]", options_for_select(languages, @settings["default_language"])
+  %br
+  = submit_tag "Save"

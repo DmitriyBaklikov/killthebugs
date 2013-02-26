@@ -18,9 +18,14 @@
             Yes,
             = link_to "Public link", fragment_by_hashie_path(fragment.hashie)
           - else
-            No,
-            = link_to "see collaborators"
-        %td= fragment.has_bugs
+            No, private
+        %td
+          - if fragment.has_bugs
+            %span.label.label-warnings
+              Yes, bug(s) inside!
+          - else
+            %span.label.label-info
+              No, just snippet
         %td
           - if fragment.users.empty?
             Not shared
